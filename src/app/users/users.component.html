@@ -1,0 +1,86 @@
+<div class="user-actions">
+    <button (click)="onClick($event)" id="list" class="default-btn">List Users</button>
+    <button (click)="onClick($event)" id="info" class="info-btn">Get Info of a User</button>
+    <button (click)="onClick($event)" id="insert" class="primary-btn">Insert a User</button>
+    <button (click)="onClick($event)" id="update" class="primary-btn">Update a User</button>
+    <button (click)="onClick($event)" id="filter" class="primary-btn">Filter By Age</button>
+    <button (click)="onClick($event)" id="delete" class="danger-btn">Delete a User</button>
+  </div>
+  <div id='getUserID' *ngIf>
+  </div>
+
+  <div [ngSwitch]="_clickedbtnid" class="ngforms">
+    <div *ngSwitchCase="'info'">
+      <input id="_id" class=".forms-control" placeholder="User id to get info of" >
+      <br>
+      <button (click)="onClick($event)" class="primary-btn" id="getinfo">Get User Info</button>
+    </div>
+    <div *ngSwitchCase="'insert'">
+      <input class=".forms-control" placeholder="Full Name" id="_fullname">
+      <input placeholder="Age" id="_age">
+      <input placeholder="Salary" id="_salary">
+      <input class=".forms-control" placeholder="Address" id="_address">
+      <br>
+      <button (click)="onClick($event)" class="primary-btn" id="sendinsert">insert</button>
+    </div>
+    <div *ngSwitchCase="'update'">
+      <input class=".forms-control" placeholder="User id to update" id="_id">
+      <input class=".forms-control" placeholder="Full Name" id="_fullname">
+      <input placeholder="Age" id="_age">
+      <input placeholder="Salary" id="_salary">
+      <input class=".forms-control" placeholder="Address" id="_address">
+      <br>
+      <button (click)="onClick($event)" class="primary-btn" id="sendupdate">Update</button>
+    </div>
+    <div *ngSwitchCase="'filter'">
+      <input class=".forms-control" placeholder="Operator e.g. lt" id="_op">
+      <input class=".forms-control" placeholder="Age e.g. 30" id="_age">
+      <input class=".forms-control" placeholder="Sort By e.g. asc" id="_sort">
+      <br>
+      <button (click)="onClick($event)" class="primary-btn" id="filterresults">Sort</button>
+    </div>
+    <div *ngSwitchCase="'delete'">
+      <input class=".forms-control" placeholder="User id to delete" id="_id">
+      <br>
+      <button (click)="onClick($event)" class="danger-btn" id="senddelete">Delete</button>
+    </div>
+    <div *ngSwitchDefault>
+      <span></span>
+    </div>
+  </div>
+  <br />
+  <br />
+  <table>
+    <thead>
+      <tr *ngIf="_users?.length > 0">
+        <th>Name</th>
+        <th>Age</th>
+        <th>Salary</th>
+        <th>Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let user of _users;">
+        <tr>
+          <td>{{user.fullname}}</td>
+          <td>{{user.age }}</td>
+          <td>{{user.salary}}</td>
+          <td>{{user.address}}</td>
+        </tr>
+      </ng-container>
+      <!--If the web service takes time to return data, the message in this <tr>
+        is displayed. When the service call returns this message disappears
+        and the users data is displayed-->
+      <!--<tr *ngIf="!users">
+        <td colspan="5">
+        Loading data. Please wait...
+        </td>
+        </tr> -->
+      <!--This message is displayed if the web services does not return any data-->
+      <tr *ngIf="users && users.length==0">
+        <td colspan="5">
+          No user records to display
+        </td>
+      </tr>
+    </tbody>
+  </table>
